@@ -26,6 +26,7 @@ const dropbox = {
   duration: 300,
 };
 
+// Generate Temporary link in Dropbox
 axios
   .post(
     `https://api.dropboxapi.com/2/files/get_temporary_upload_link`,
@@ -38,6 +39,7 @@ axios
     }
   )
   .then((dropbox_reponse) => {
+    // All Photoshop API with Dropbox Link
     axios
       .post(
         api_url,
@@ -61,6 +63,7 @@ axios
         }
       )
       .then((response) => {
+        // Keep calling Status API if status is running.
         const statusUrl = response.data._links.self.href;
         async function checkStatusAndGetImage() {
           try {

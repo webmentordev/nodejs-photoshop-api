@@ -1,6 +1,6 @@
 // This API will replace Smart Objects with logo/images.
 // Example, apply already build effects on a logo
-// It will repalce the logo inside the smart object.
+// It will replace the logo inside the smart object.
 
 const axios = require("axios");
 require("dotenv").config();
@@ -30,6 +30,7 @@ const dropbox = {
   duration: 300,
 };
 
+// Generate Temporary link in Dropbox
 axios
   .post(
     `https://api.dropboxapi.com/2/files/get_temporary_upload_link`,
@@ -42,6 +43,7 @@ axios
     }
   )
   .then((dropbox_reponse) => {
+    // All Photoshop API with Dropbox Link
     axios
       .post(
         api_url,
@@ -81,6 +83,7 @@ axios
         }
       )
       .then((response) => {
+        // Keep calling Status API if status is running.
         const statusUrl = response.data._links.self.href;
         async function checkStatusAndGetImage() {
           try {
@@ -94,9 +97,9 @@ axios
                   Authorization: `Bearer ${access_token}`,
                 },
               });
-              console.log({
-                "Status response": statusResponse.data.outputs[0],
-              });
+              // console.log({
+              //   "Status response": statusResponse.data.outputs[0],
+              // });
               if (statusResponse.data.outputs[0].status == "succeeded") {
                 jobCompleted = true;
                 axios
